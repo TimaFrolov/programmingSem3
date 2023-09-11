@@ -33,7 +33,7 @@ public class ParserTests
     public void Test1((string[] lines, int[,] expected) testCase)
     {
         var actual = MatrixParser.ParseMatrix(testCase.lines);
-        Assert.AreEqual(testCase.expected, actual);
+        Assert.That(actual, Is.EqualTo(testCase.expected));
     }
 
     [TestCaseSource(nameof(TestCasesThrows))]

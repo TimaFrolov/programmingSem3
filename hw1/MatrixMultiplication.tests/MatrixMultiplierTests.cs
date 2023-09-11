@@ -72,6 +72,6 @@ public class MatrixMultiplierTests
     )
     {
         var actual = function(testCase.matrix1, testCase.matrix2);
-        Assert.AreEqual(testCase.expected, actual);
+        Assert.That(actual, Is.EqualTo(testCase.expected));
     }
 }
