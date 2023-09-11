@@ -32,13 +32,13 @@ public class ParserTests
     [TestCaseSource(nameof(TestCases))]
     public void Test1((string[] lines, int[,] expected) testCase)
     {
-        var actual = Parser.ParseMatrix(testCase.lines);
+        var actual = MatrixParser.ParseMatrix(testCase.lines);
         Assert.AreEqual(testCase.expected, actual);
     }
 
     [TestCaseSource(nameof(TestCasesThrows))]
     public void Test2(string[] lines)
     {
-        Assert.Throws<ArgumentException>(() => Parser.ParseMatrix(lines));
+        Assert.Throws<ArgumentException>(() => MatrixParser.ParseMatrix(lines));
     }
 }

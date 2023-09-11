@@ -1,7 +1,12 @@
 namespace MatrixMultiplication;
 
+/// <summary>Workspace for matrix multiplication.</summary>
 internal class Workspace
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Workspace"/> class from console arguments.
+    /// </summary>
+    /// <param name="args">Console arguments.</param>
     public Workspace(string[] args)
     {
         this.Mode = ModeType.Default;
@@ -53,9 +58,7 @@ internal class Workspace
 
         if (filesAmount != 3)
         {
-            throw new ArgumentException(
-                "Usage: MatrixMultiplication [-m mode] <first file> <second file> <output file>"
-            );
+            throw new ArgumentException($"Invalid amount of files: {filesAmount}.");
         }
 
         this.InputFile1 = files[0];
@@ -63,19 +66,55 @@ internal class Workspace
         this.OutputFile = files[2];
     }
 
+    /// <summary>
+    /// Possible modes of matrix multiplier program.
+    /// </summary>
     public enum ModeType
     {
+        /// <summary>
+        /// Default mode.
+        /// Multiply matrix from <see cref="InputFile1"/> by matrix from <see cref="InputFile2"/>
+        /// and write result to <see cref="OutputFile"/>.
+        /// </summary>
         Default,
+
+        /// <summary>
+        /// Default mode.
+        /// Multiply matrix from <see cref="InputFile1"/> by matrix from <see cref="InputFile2"/>
+        /// using transposition for optimization and write result to <see cref="OutputFile"/>.
+        /// </summary>
         Transposition,
+
+        /// <summary>
+        /// Default mode.
+        /// Multiply matrix from <see cref="InputFile1"/> by matrix from <see cref="InputFile2"/>
+        /// using transposition and multithreading for optimization and write result to <see cref="OutputFile"/>.
+        /// </summary>
         Multithreading,
+
+        /// <summary>
+        /// Show help message.
+        /// </summary>
         Help,
     }
 
+    /// <summary>
+    /// Gets selected mode of matrix multiplier program.
+    /// </summary>
     public ModeType Mode { get; private set; }
 
+    /// <summary>
+    /// Gets first input file path.
+    /// </summary>
     public string InputFile1 { get; private set; }
 
+    /// <summary>
+    /// Gets second input file path.
+    /// </summary>
     public string InputFile2 { get; private set; }
 
+    /// <summary>
+    /// Gets output file path.
+    /// </summary>
     public string OutputFile { get; private set; }
 }

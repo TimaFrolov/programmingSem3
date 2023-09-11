@@ -1,7 +1,14 @@
 namespace MatrixMultiplication;
 
-public static class Parser
+/// <summary>Matrix parser.</summary>
+public static class MatrixParser
 {
+    /// <summary>
+    /// Parses matrix from given lines.
+    /// Numbers in lines should be separated by one space character (' ').
+    /// </summary>
+    /// <param name="lines">lines with matrix elements.</param>
+    /// <returns>Parsed matrix.</returns>
     public static int[,] ParseMatrix(string[] lines)
     {
         string[][] splitedLines = lines.Select(line => line.Split(' ')).ToArray();

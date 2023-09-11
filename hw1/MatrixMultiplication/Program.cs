@@ -1,9 +1,10 @@
 namespace MatrixMultiplication;
 
+/// <summary>Internal class Program.</summary>
 internal static class Program
 {
     private const string HelpMessage =
-        "Usage: MatrixMultiplication [-m <mode>] <first file> <second file> <output file>\n"
+        "Usage: MatrixMultiplication [-h|--help] [-m <mode>] <first file> <second file> <output file>\n"
         + "  Correct modes: \"transposition\", \"multithreading\"\n"
         + "  When launched with nio mode, program will not use transposition or multithreading\n"
         + "  When launched with transposition mode, program will use transposition to speed up matrix multiplication\n"
@@ -54,6 +55,8 @@ internal static class Program
         }
     }
 
+    /// <summary>Function that called when running application.</summary>
+    /// <param name="args">Command line arguments.</param>
     private static void Main(string[] args)
     {
         Workspace workspace;
@@ -63,7 +66,7 @@ internal static class Program
         }
         catch (ArgumentException exception)
         {
-            Console.WriteLine(exception.Message);
+            Console.WriteLine($"Incorrect program arguments: {exception.Message}. Use 'MatrixMultiplication --help' to get help");
             return;
         }
 
@@ -77,17 +80,17 @@ internal static class Program
         int[,] matrix2;
         try
         {
-            matrix1 = Parser.ParseMatrix(File.ReadLines(workspace.InputFile1).ToArray());
-            matrix2 = Parser.ParseMatrix(File.ReadLines(workspace.InputFile2).ToArray());
+            matrix1 = MatrixParser.ParseMatrix(File.ReadLines(workspace.InputFile1).ToArray());
+            matrix2 = MatrixParser.ParseMatrix(File.ReadLines(workspace.InputFile2).ToArray());
         }
         catch (IOException exception)
         {
-            Console.WriteLine($"Cannot open file: {0}", exception.Message);
+            Console.WriteLine($"Cannot open file: {exception.Message}");
             return;
         }
         catch (ArgumentException exception)
         {
-            Console.WriteLine($"Given file contains incorrect matrix: {0}", exception.Message);
+            Console.WriteLine($"Given file contains incorrect matrix: {exception.Message}");
             return;
         }
 
@@ -105,7 +108,7 @@ internal static class Program
         }
         catch (Exception exception)
         {
-            Console.WriteLine($"Cannot write result to file: {0}", exception.Message);
+            Console.WriteLine($"Cannot write result to file: {exception.Message}");
             return;
         }
     }

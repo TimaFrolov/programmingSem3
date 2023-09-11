@@ -1,7 +1,14 @@
 ﻿namespace MatrixMultiplication;
 
+/// <summary>Collection of functions that perform matrix multiplication.</summary>
 public static class MartixMultiplier
 {
+    /// <summary>
+    /// Multiplies two matrices.
+    /// </summary>
+    /// <param name="a">First matrix (with sizes N x K).</param>
+    /// <param name="b">Second matrix (with sizes K x M).</param>
+    /// <returns>Result of multiplication (with sizes N x M).</returns>
     public static int[,]? Multiply(int[,] a, int[,] b)
     {
         if (a.GetLength(1) != b.GetLength(0))
@@ -26,6 +33,12 @@ public static class MartixMultiplier
         return c;
     }
 
+    /// <summary>
+    /// Multiplies two matrices. Uses transposition of the second matrix to improve performance.
+    /// </summary>
+    /// <param name="a">First matrix (with sizes N x K).</param>
+    /// <param name="b">Second matrix (with sizes K x M).</param>
+    /// <returns>Result of multiplication (with sizes N x M).</returns>
     public static int[,]? MultiplyWithTransposition(int[,] a, int[,] b)
     {
         if (a.GetLength(1) != b.GetLength(0))
@@ -51,6 +64,14 @@ public static class MartixMultiplier
         return c;
     }
 
+    /// <summary>
+    /// Multiplies two matrices.
+    /// Uses transposition of the second matrix to improve performance.
+    /// Uses multithreading to improve performance.
+    /// </summary>
+    /// <param name="a">First matrix (with sizes N x K).</param>
+    /// <param name="b">Second matrix (with sizes K x M).</param>
+    /// <returns>Result of multiplication (with sizes N x M).</returns>
     public static int[,]? MultiplyWithMultithreading(int[,] a, int[,] b)
     {
         if (a.GetLength(1) != b.GetLength(0))
@@ -92,6 +113,11 @@ public static class MartixMultiplier
         return c;
     }
 
+    /// <summary>
+    /// Transposes matrix.
+    /// </summary>
+    /// <param name="a">Matrix to get transposed version of (with sizes N x M).</param>
+    /// <returns>Result of transposition (with sizes M x N).</returns>
     private static int[,] Transpose(int[,] a)
     {
         var transposed = new int[a.GetLength(1), a.GetLength(0)];
@@ -106,6 +132,12 @@ public static class MartixMultiplier
         return transposed;
     }
 
+    /// <summary>
+    /// Transposes matrix.
+    /// Uses multithreading to improve performance.
+    /// </summary>
+    /// <param name="a">Matrix to get transposed version of (with sizes N x M).</param>
+    /// <returns>Result of transposition (with sizes M x N).</returns>
     private static int[,] TransposeMultithreaded(int[,] a)
     {
         var transposed = new int[a.GetLength(1), a.GetLength(0)];
