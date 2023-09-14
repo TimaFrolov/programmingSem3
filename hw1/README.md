@@ -4,41 +4,41 @@
 - Бенчмарк `dotnet run --project Tester --configuration Release`
 Результаты запуска бенчмарка на моём ноутбуке (Lenovo Yoga 7i, Intel Core i5-1135G7, linux fedora, Balanced power mode, dotnet version 7.0.110):
 
-|                    Method | size |                 Mean |                Error |               StdDev |               Median |
-|---------------------------|------|---------------------:|---------------------:|---------------------:|---------------------:|
-|                  Multiply |    1 |             38.80 ns |             0.296 ns |             0.277 ns |             38.86 ns |
-| MultiplyWithTransposition |    1 |             75.83 ns |             0.579 ns |             0.542 ns |             75.93 ns |
-|       MultiplyWithThreads |    1 |         75,898.19 ns |           585.684 ns |           519.193 ns |         75,855.94 ns |
-|                  Multiply |    2 |             55.41 ns |             0.352 ns |             0.294 ns |             55.40 ns |
-| MultiplyWithTransposition |    2 |             98.95 ns |             0.529 ns |             0.495 ns |             98.90 ns |
-|       MultiplyWithThreads |    2 |        145,564.57 ns |           835.911 ns |           781.911 ns |        145,578.54 ns |
-|                  Multiply |    4 |            178.18 ns |             0.900 ns |             0.842 ns |            178.20 ns |
-| MultiplyWithTransposition |    4 |            243.35 ns |             1.802 ns |             1.597 ns |            243.34 ns |
-|       MultiplyWithThreads |    4 |        278,128.84 ns |         2,565.710 ns |         2,399.966 ns |        278,168.63 ns |
-|                  Multiply |    8 |          1,178.56 ns |            12.054 ns |            11.276 ns |          1,175.05 ns |
-| MultiplyWithTransposition |    8 |          1,306.45 ns |            17.442 ns |            15.462 ns |          1,305.31 ns |
-|       MultiplyWithThreads |    8 |        539,142.91 ns |         3,767.445 ns |         3,524.071 ns |        539,052.46 ns |
-|                  Multiply |   16 |          8,742.76 ns |            23.672 ns |            20.985 ns |          8,742.41 ns |
-| MultiplyWithTransposition |   16 |         10,510.74 ns |            39.478 ns |            34.996 ns |         10,520.44 ns |
-|       MultiplyWithThreads |   16 |      1,065,622.75 ns |         7,148.996 ns |         6,687.175 ns |      1,064,441.58 ns |
-|                  Multiply |   32 |         71,305.05 ns |           198.100 ns |           175.611 ns |         71,333.56 ns |
-| MultiplyWithTransposition |   32 |         74,125.80 ns |           345.747 ns |           288.714 ns |         74,147.84 ns |
-|       MultiplyWithThreads |   32 |      2,119,997.34 ns |        19,332.300 ns |        17,137.580 ns |      2,118,472.05 ns |
-|                  Multiply |   64 |        548,599.38 ns |         3,994.901 ns |         3,736.833 ns |        548,745.27 ns |
-| MultiplyWithTransposition |   64 |        556,767.70 ns |         4,103.621 ns |         3,838.529 ns |        557,649.27 ns |
-|       MultiplyWithThreads |   64 |      4,306,685.08 ns |        48,659.768 ns |        45,516.377 ns |      4,299,881.48 ns |
-|                  Multiply |  128 |      4,414,005.42 ns |        20,983.080 ns |        18,600.954 ns |      4,407,593.75 ns |
-| MultiplyWithTransposition |  128 |      4,323,020.93 ns |        25,829.625 ns |        22,897.290 ns |      4,332,386.57 ns |
-|       MultiplyWithThreads |  128 |      9,096,498.82 ns |       180,536.486 ns |       185,397.679 ns |      9,037,738.55 ns |
-|                  Multiply |  256 |     36,208,403.85 ns |       444,385.765 ns |       415,678.721 ns |     36,230,345.57 ns |
-| MultiplyWithTransposition |  256 |     34,542,157.91 ns |       415,038.695 ns |       346,576.108 ns |     34,564,375.13 ns |
-|       MultiplyWithThreads |  256 |     33,811,473.69 ns |       336,235.256 ns |       298,063.796 ns |     33,893,849.47 ns |
-|                  Multiply |  512 |    347,068,909.53 ns |     1,731,876.808 ns |     1,619,998.641 ns |    346,511,296.00 ns |
-| MultiplyWithTransposition |  512 |    268,837,732.09 ns |     1,280,550.475 ns |     1,257,671.791 ns |    269,106,471.50 ns |
-|       MultiplyWithThreads |  512 |    246,816,863.41 ns |     9,733,119.891 ns |    28,698,323.599 ns |    237,905,873.17 ns |
-|                  Multiply | 1024 |  3,779,655,735.08 ns |   125,794,841.959 ns |   364,953,646.177 ns |  3,573,512,544.00 ns |
-| MultiplyWithTransposition | 1024 |  2,340,578,059.03 ns |    65,968,403.844 ns |   193,473,908.912 ns |  2,251,330,384.00 ns |
-|       MultiplyWithThreads | 1024 |  2,130,587,135.11 ns |   108,538,536.174 ns |   320,028,322.791 ns |  2,018,189,797.50 ns |
-|                  Multiply | 2048 | 88,545,278,505.33 ns | 1,754,500,458.749 ns | 1,641,160,817.684 ns | 88,099,554,029.00 ns |
-| MultiplyWithTransposition | 2048 | 19,642,799,323.58 ns |   481,852,043.343 ns | 1,420,751,621.495 ns | 19,712,727,729.50 ns |
-|       MultiplyWithThreads | 2048 | 19,554,523,615.69 ns |    40,728,629.092 ns |    34,010,249.900 ns | 19,556,726,726.00 ns |
+|                    Method | size |                 Mean |              Error |               StdDev |               Median |
+|-------------------------- |----- |---------------------:|-------------------:|---------------------:|---------------------:|
+|                  Multiply |    1 |             51.65 ns |           0.541 ns |             0.506 ns |             51.68 ns |
+| MultiplyWithTransposition |    1 |             97.40 ns |           1.745 ns |             1.633 ns |             97.38 ns |
+|       MultiplyWithThreads |    1 |        112,355.22 ns |       2,199.356 ns |         3,793.781 ns |        111,882.22 ns |
+|                  Multiply |    2 |             73.62 ns |           1.518 ns |             3.067 ns |             73.39 ns |
+| MultiplyWithTransposition |    2 |            129.41 ns |           2.646 ns |             5.581 ns |            127.33 ns |
+|       MultiplyWithThreads |    2 |        213,880.77 ns |       2,425.188 ns |         2,268.522 ns |        213,821.02 ns |
+|                  Multiply |    4 |            187.38 ns |           3.031 ns |             3.941 ns |            188.15 ns |
+| MultiplyWithTransposition |    4 |            267.45 ns |           4.426 ns |             4.140 ns |            266.27 ns |
+|       MultiplyWithThreads |    4 |        398,710.64 ns |       7,933.852 ns |        18,701.022 ns |        406,104.77 ns |
+|                  Multiply |    8 |          1,183.20 ns |          18.319 ns |            21.807 ns |          1,176.66 ns |
+| MultiplyWithTransposition |    8 |          1,343.95 ns |           9.471 ns |             7.908 ns |          1,341.15 ns |
+|       MultiplyWithThreads |    8 |        712,747.89 ns |      13,407.258 ns |        16,465.317 ns |        718,197.25 ns |
+|                  Multiply |   16 |         10,495.06 ns |         100.544 ns |            89.130 ns |         10,503.48 ns |
+| MultiplyWithTransposition |   16 |         11,429.91 ns |         190.355 ns |           178.058 ns |         11,394.59 ns |
+|       MultiplyWithThreads |   16 |      1,106,616.70 ns |       8,819.490 ns |         7,818.248 ns |      1,109,222.14 ns |
+|                  Multiply |   32 |         73,350.19 ns |         448.584 ns |           397.658 ns |         73,411.89 ns |
+| MultiplyWithTransposition |   32 |         76,049.71 ns |         667.162 ns |           624.064 ns |         76,375.66 ns |
+|       MultiplyWithThreads |   32 |      3,057,934.01 ns |      22,688.648 ns |        18,946.049 ns |      3,054,700.95 ns |
+|                  Multiply |   64 |        656,535.98 ns |      11,264.545 ns |        10,536.863 ns |        653,887.08 ns |
+| MultiplyWithTransposition |   64 |        565,399.46 ns |       4,147.210 ns |         3,237.868 ns |        564,493.79 ns |
+|       MultiplyWithThreads |   64 |      4,413,571.96 ns |      24,437.349 ns |        22,858.712 ns |      4,420,332.52 ns |
+|                  Multiply |  128 |      4,489,102.87 ns |      26,453.960 ns |        22,090.255 ns |      4,489,450.15 ns |
+| MultiplyWithTransposition |  128 |      4,397,511.51 ns |      30,765.673 ns |        25,690.730 ns |      4,398,671.86 ns |
+|       MultiplyWithThreads |  128 |     13,768,795.98 ns |     268,175.453 ns |       250,851.485 ns |     13,638,801.16 ns |
+|                  Multiply |  256 |     43,438,565.24 ns |     825,341.821 ns |       810,596.026 ns |     43,208,517.25 ns |
+| MultiplyWithTransposition |  256 |     34,795,194.67 ns |     197,182.844 ns |       184,444.955 ns |     34,808,392.46 ns |
+|       MultiplyWithThreads |  256 |     42,541,415.18 ns |   1,671,058.728 ns |     4,927,154.363 ns |     41,822,308.87 ns |
+|                  Multiply |  512 |    315,520,256.80 ns |   4,909,347.272 ns |    11,378,158.823 ns |    311,317,512.00 ns |
+| MultiplyWithTransposition |  512 |    275,178,940.58 ns |   2,086,409.959 ns |     2,712,922.284 ns |    275,336,514.00 ns |
+|       MultiplyWithThreads |  512 |    193,380,724.61 ns |   3,839,750.279 ns |     4,715,558.174 ns |    195,895,608.00 ns |
+|                  Multiply | 1024 |  3,825,902,997.71 ns |  20,969,144.786 ns |    18,588,600.670 ns |  3,824,406,092.00 ns |
+| MultiplyWithTransposition | 1024 |  2,448,692,469.93 ns |  21,705,234.641 ns |    20,303,089.950 ns |  2,448,005,093.00 ns |
+|       MultiplyWithThreads | 1024 |  1,729,404,227.92 ns |  40,362,379.062 ns |   111,169,713.853 ns |  1,768,764,004.50 ns |
+|                  Multiply | 2048 | 78,958,627,367.27 ns | 782,929,152.883 ns |   732,352,415.370 ns | 79,031,074,287.00 ns |
+| MultiplyWithTransposition | 2048 | 19,486,107,812.69 ns |  22,555,464.408 ns |    18,834,834.323 ns | 19,489,894,671.00 ns |
+|       MultiplyWithThreads | 2048 | 16,950,517,995.79 ns | 769,854,390.625 ns | 2,269,933,040.458 ns | 16,928,307,917.00 ns |

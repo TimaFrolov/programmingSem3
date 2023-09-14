@@ -25,22 +25,16 @@ public class Benchmark
     }
 
     [Benchmark]
-    public void Multiply()
-    {
-        MatrixMultiplication.MartixMultiplier.Multiply(a, b);
-    }
+    public int[,]? Multiply()
+        => MatrixMultiplication.MartixMultiplier.Multiply(a, b);
 
     [Benchmark]
-    public void MultiplyWithTransposition()
-    {
-        MatrixMultiplication.MartixMultiplier.MultiplyWithTransposition(a, b);
-    }
+    public int[,]? MultiplyWithTransposition()
+        => MatrixMultiplication.MartixMultiplier.MultiplyWithTransposition(a, b);
 
     [Benchmark]
-    public void MultiplyWithThreads()
-    {
-        MatrixMultiplication.MartixMultiplier.MultiplyWithMultithreading(a, b);
-    }
+    public int[,]? MultiplyWithThreads()
+        => MatrixMultiplication.MartixMultiplier.MultiplyWithMultithreading(a, b);
 }
 
 internal class Program
