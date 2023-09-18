@@ -2,7 +2,7 @@
 Запуск:
 - Само приложение `dotnet run --project MatrixMultiplication`
 - Бенчмарк `dotnet run --project Tester --configuration Release`
-Результаты запуска бенчмарка на моём ноутбуке (Lenovo Yoga 7i, Intel Core i5-1135G7, linux fedora, Balanced power mode, dotnet version 7.0.110):
+Результаты запуска бенчмарка на моём ноутбуке (Lenovo Yoga 7i, Intel Core i5-1135G7, linux fedora, Perfomance power mode, dotnet version 7.0.110):
 
 |                    Method | size |                 Mean |              Error |               StdDev |               Median |
 |-------------------------- |----- |---------------------:|-------------------:|---------------------:|---------------------:|
