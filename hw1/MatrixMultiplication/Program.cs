@@ -88,6 +88,11 @@ internal static class Program
             Console.WriteLine($"Cannot open file: {exception.Message}");
             return;
         }
+        catch (UnauthorizedAccessException exception)
+        {
+            Console.WriteLine($"Cannot open file: {exception.Message}");
+            return;
+        }
         catch (ArgumentException exception)
         {
             Console.WriteLine($"Given file contains incorrect matrix: {exception.Message}");
