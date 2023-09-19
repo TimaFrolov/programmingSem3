@@ -7,21 +7,23 @@ if [[ -z $TASK_TYPE ]] ; then
 fi
 
 mkdir $TASK_PATH
-cd $TASK_PATH
+pushd $TASK_PATH
 
 mkdir $TASK_NAME
-cd $TASK_NAME
+pushd $TASK_NAME
 dotnet new $TASK_TYPE
 dotnet add $TASK_NAME.csproj package StyleCop.Analyzers
 dotnet new 
-cd ..
+popd
 
 mkdir $TASK_NAME.tests
-cd $TASK_NAME.tests
+pushd $TASK_NAME.tests
 dotnet new nunit
 dotnet add $TASK_NAME.tests.csproj reference ../$TASK_NAME/$TASK_NAME.csproj
-cd ..
+popd
 
 dotnet new sln
 dotnet sln add *.sln $TASK_NAME/$TASK_NAME.csproj
 dotnet sln add *.sln $TASK_NAME.tests/$TASK_NAME.tests.csproj
+popd
+dotnet add "$TASK_PATH/$TASK_NAME/$TASK_NAME.csproj" reference utils/utils/utils.csproj
