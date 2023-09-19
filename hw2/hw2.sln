@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lazy", "Lazy\Lazy.csproj", "{B78F5774-338B-4251-8DD7-34D98A3E4C99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lazy.tests", "Lazy.tests\Lazy.tests.csproj", "{07DF24EF-CF8C-4388-91A0-46DBF3B31D77}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B78F5774-338B-4251-8DD7-34D98A3E4C99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B78F5774-338B-4251-8DD7-34D98A3E4C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B78F5774-338B-4251-8DD7-34D98A3E4C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B78F5774-338B-4251-8DD7-34D98A3E4C99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07DF24EF-CF8C-4388-91A0-46DBF3B31D77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07DF24EF-CF8C-4388-91A0-46DBF3B31D77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07DF24EF-CF8C-4388-91A0-46DBF3B31D77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07DF24EF-CF8C-4388-91A0-46DBF3B31D77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A6E9778-0882-4A83-A2F9-1656C647F418}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A6E9778-0882-4A83-A2F9-1656C647F418}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A6E9778-0882-4A83-A2F9-1656C647F418}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A6E9778-0882-4A83-A2F9-1656C647F418}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
