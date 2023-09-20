@@ -81,7 +81,7 @@ public class MatrixMultiplierTests
     };
 
     [Test]
-    public void Test(
+    public void MultiplyMatrixTest(
         [ValueSource(nameof(TestCases))]
             (IntMatrix matrix1, IntMatrix matrix2, IntMatrix? expected) testCase,
         [ValueSource(nameof(Functions))] Func<IntMatrix, IntMatrix, IntMatrix?> function
