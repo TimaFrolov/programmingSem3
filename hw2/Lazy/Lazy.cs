@@ -2,18 +2,40 @@
 
 using Utils;
 
+/// <summary>
+/// Interface for lazy evaluation.
+/// </summary>
+/// <typeparam name="T">The type of the value.</typeparam>
 public interface ILazy<T>
 {
+    /// <summary>
+    /// Gets the value.
+    /// </summary>
+    /// <returns>The value.</returns>
+    /// <exception>If the factory function throws an exception.</exception>
     T Get();
 }
 
+/// <summary>
+/// A lazy evaluation implementation.
+/// </summary>
+/// <remarks>
+/// This implementation is not thread-safe.
+/// </remarks>
+/// <typeparam name="T">The type of the value.</typeparam>
 public sealed class Lazy<T> : ILazy<T>
 {
     private Option<Func<T>> factory;
     private Option<Result<T, Exception>> value = Option<Result<T, Exception>>.None;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Lazy{T}"/> class.
+    /// </summary>
+    /// <param name="factory">The factory function.</param>
+    /// <returns>The lazy evaluation.</returns>
     public Lazy(Func<T> factory) => this.factory = factory;
 
+    /// <inheritdoc cref="ILazy{T}"/>
     public T Get()
     {
         this.factory.Map(func =>
@@ -26,6 +48,10 @@ public sealed class Lazy<T> : ILazy<T>
     }
 }
 
+/// <summary>
+/// A thread-safe lazy evaluation implementation.
+/// </summary>
+/// <typeparam name="T">The type of the value.</typeparam>
 public sealed class LazyLock<T> : ILazy<T>
 {
     private Option<Func<T>> factory;
@@ -35,8 +61,14 @@ public sealed class LazyLock<T> : ILazy<T>
     private bool valueProduced = false;
     private ManualResetEvent valueProducedEvent = new ManualResetEvent(false);
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LazyLock{T}"/> class.
+    /// </summary>
+    /// <param name="factory">The factory function.</param>
+    /// <returns>The lazy evaluation.</returns>
     public LazyLock(Func<T> factory) => this.factory = factory;
 
+    /// <inheritdoc cref="ILazy{T}"/>
     public T Get()
     {
         if (Interlocked.Increment(ref this.valueStartedProducing) == 1)
