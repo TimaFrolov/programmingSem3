@@ -5,12 +5,6 @@ public class IntMatrix
 {
     private int[,] underlying;
 
-    /// <summary> Gets height of the matrix. </summary>
-    public int Height => underlying.GetLength(0);
-
-    /// <summary> Gets width of the matrix. </summary>
-    public int Width => underlying.GetLength(1);
-
     /// <summary>
     /// Initializes a new instance of the <see cref="IntMatrix"/> class from given matrix.
     /// </summary>
@@ -23,6 +17,12 @@ public class IntMatrix
     /// <param name="height">Height of the matrix.</param>
     /// <param name="width">Width of the matrix.</param>
     public IntMatrix(int height, int width) => this.underlying = new int[height, width];
+
+    /// <summary> Gets height of the matrix. </summary>
+    public int Height => this.underlying.GetLength(0);
+
+    /// <summary> Gets width of the matrix. </summary>
+    public int Width => this.underlying.GetLength(1);
 
     /// <summary> Gets or sets element of the matrix with given position.</summary>
     /// <param name="row">Row index of the element.</param>
@@ -44,6 +44,7 @@ public class IntMatrix
         {
             return false;
         }
+
         if (this.Height != matrix.Height || this.Width != matrix.Width)
         {
             return false;
@@ -62,4 +63,10 @@ public class IntMatrix
 
         return true;
     }
+
+    /// <summary>
+    /// Returns hash code of the matrix.
+    /// </summary>
+    /// <returns>Hash code of the matrix.</returns>
+    public override int GetHashCode() => this.underlying.GetHashCode();
 }
