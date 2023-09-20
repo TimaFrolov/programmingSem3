@@ -3,6 +3,7 @@
 public record Option<T>
 {
     public sealed record Some(T value) : Option<T>;
+
     public sealed record _None : Option<T>;
 
     public static readonly _None None = new _None();
@@ -11,8 +12,8 @@ public record Option<T>
 
     public bool IsSome() => this is Some;
 
-    public Option<TNew> Map<TNew>(Func<T, TNew> func)
-        => this is Some some ? new Option<TNew>.Some(func(some.value)) : Option<TNew>.None;
+    public Option<TNew> Map<TNew>(Func<T, TNew> func) =>
+        this is Some some ? new Option<TNew>.Some(func(some.value)) : Option<TNew>.None;
 
     public void Map(Action<T> action)
     {
@@ -22,8 +23,10 @@ public record Option<T>
         }
     }
 
-    public T Unwrap()
-        => this is Some some ? some.value : throw new InvalidOperationException("Invalid result access");
+    public T Unwrap() =>
+        this is Some some
+            ? some.value
+            : throw new InvalidOperationException("Invalid option access");
 
     private Option() { }
 }

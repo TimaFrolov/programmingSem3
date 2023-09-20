@@ -1,4 +1,5 @@
 ﻿namespace Lazy;
+
 using Utils;
 
 public interface ILazy<T>
