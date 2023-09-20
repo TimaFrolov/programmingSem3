@@ -26,7 +26,7 @@ public sealed class Lazy<T> : ILazy<T>
     }
 }
 
-public sealed class AtomicLazy<T> : ILazy<T>
+public sealed class LazyLock<T> : ILazy<T>
 {
     private Option<Func<T>> factory;
     private Option<Result<T, Exception>> value = Option<Result<T, Exception>>.None;
@@ -35,7 +35,7 @@ public sealed class AtomicLazy<T> : ILazy<T>
     private bool valueProduced = false;
     private ManualResetEvent valueProducedEvent = new ManualResetEvent(false);
 
-    public AtomicLazy(Func<T> factory) => this.factory = factory;
+    public LazyLock(Func<T> factory) => this.factory = factory;
 
     public T Get()
     {
