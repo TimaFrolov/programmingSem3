@@ -9,11 +9,11 @@ public static class MatrixParser
     /// </summary>
     /// <param name="lines">lines with matrix elements.</param>
     /// <returns>Parsed matrix.</returns>
-    public static int[,] ParseMatrix(string[] lines)
+    public static IntMatrix ParseMatrix(string[] lines)
     {
         string[][] splitedLines = lines.Select(line => line.Split(' ')).ToArray();
 
-        var matrix = new int[splitedLines.Length, splitedLines[0].Length];
+        var matrix = new IntMatrix(splitedLines.Length, splitedLines[0].Length);
         for (int i = 0; i < splitedLines.Length; i++)
         {
             if (splitedLines[i].Length != splitedLines[0].Length)

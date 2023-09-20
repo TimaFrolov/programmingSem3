@@ -9,21 +9,21 @@ public static class MartixMultiplier
     /// <param name="a">First matrix (with sizes N x K).</param>
     /// <param name="b">Second matrix (with sizes K x M).</param>
     /// <returns>Result of multiplication (with sizes N x M).</returns>
-    public static int[,]? Multiply(int[,] a, int[,] b)
+    public static IntMatrix? Multiply(IntMatrix a, IntMatrix b)
     {
-        if (a.GetLength(1) != b.GetLength(0))
+        if (a.Width != b.Height)
         {
             return null;
         }
 
-        int[,] c = new int[a.GetLength(0), b.GetLength(1)];
+        var c = new IntMatrix(a.Height, b.Width);
 
-        for (int i = 0; i < a.GetLength(0); i++)
+        for (int i = 0; i < a.Height; i++)
         {
-            for (int j = 0; j < b.GetLength(1); j++)
+            for (int j = 0; j < b.Width; j++)
             {
                 c[i, j] = 0;
-                for (int k = 0; k < a.GetLength(1); k++)
+                for (int k = 0; k < a.Width; k++)
                 {
                     c[i, j] += a[i, k] * b[k, j];
                 }
@@ -39,22 +39,22 @@ public static class MartixMultiplier
     /// <param name="a">First matrix (with sizes N x K).</param>
     /// <param name="b">Second matrix (with sizes K x M).</param>
     /// <returns>Result of multiplication (with sizes N x M).</returns>
-    public static int[,]? MultiplyWithTransposition(int[,] a, int[,] b)
+    public static IntMatrix? MultiplyWithTransposition(IntMatrix a, IntMatrix b)
     {
-        if (a.GetLength(1) != b.GetLength(0))
+        if (a.Width != b.Height)
         {
             return null;
         }
 
         var bTransposed = Transpose(b);
-        int[,] c = new int[a.GetLength(0), b.GetLength(1)];
+        var c = new IntMatrix(a.Height, b.Width);
 
-        for (int i = 0; i < a.GetLength(0); i++)
+        for (int i = 0; i < a.Height; i++)
         {
-            for (int j = 0; j < b.GetLength(1); j++)
+            for (int j = 0; j < b.Width; j++)
             {
                 c[i, j] = 0;
-                for (int k = 0; k < a.GetLength(1); k++)
+                for (int k = 0; k < a.Width; k++)
                 {
                     c[i, j] += a[i, k] * bTransposed[j, k];
                 }
@@ -72,26 +72,26 @@ public static class MartixMultiplier
     /// <param name="a">First matrix (with sizes N x K).</param>
     /// <param name="b">Second matrix (with sizes K x M).</param>
     /// <returns>Result of multiplication (with sizes N x M).</returns>
-    public static int[,]? MultiplyWithMultithreading(int[,] a, int[,] b)
+    public static IntMatrix? MultiplyWithMultithreading(IntMatrix a, IntMatrix b)
     {
-        if (a.GetLength(1) != b.GetLength(0))
+        if (a.Width != b.Height)
         {
             return null;
         }
 
         var bTransposed = TransposeMultithreaded(b);
-        int[,] c = new int[a.GetLength(0), b.GetLength(1)];
+        var c = new IntMatrix(a.Height, b.Width);
 
         var threads = Enumerable
-            .Range(0, a.GetLength(0))
+            .Range(0, a.Height)
             .Select(
                 i =>
                     new Thread(() =>
                     {
-                        for (int j = 0; j < b.GetLength(1); j++)
+                        for (int j = 0; j < b.Width; j++)
                         {
                             c[i, j] = 0;
-                            for (int k = 0; k < a.GetLength(1); k++)
+                            for (int k = 0; k < a.Width; k++)
                             {
                                 c[i, j] += a[i, k] * bTransposed[j, k];
                             }
@@ -118,12 +118,12 @@ public static class MartixMultiplier
     /// </summary>
     /// <param name="a">Matrix to get transposed version of (with sizes N x M).</param>
     /// <returns>Result of transposition (with sizes M x N).</returns>
-    private static int[,] Transpose(int[,] a)
+    private static IntMatrix Transpose(IntMatrix a)
     {
-        var transposed = new int[a.GetLength(1), a.GetLength(0)];
-        for (int i = 0; i < a.GetLength(1); i++)
+        var transposed = new IntMatrix(a.Width, a.Height);
+        for (int i = 0; i < a.Width; i++)
         {
-            for (int j = 0; j < a.GetLength(0); j++)
+            for (int j = 0; j < a.Height; j++)
             {
                 transposed[i, j] = a[j, i];
             }
@@ -138,16 +138,16 @@ public static class MartixMultiplier
     /// </summary>
     /// <param name="a">Matrix to get transposed version of (with sizes N x M).</param>
     /// <returns>Result of transposition (with sizes M x N).</returns>
-    private static int[,] TransposeMultithreaded(int[,] a)
+    private static IntMatrix TransposeMultithreaded(IntMatrix a)
     {
-        var transposed = new int[a.GetLength(1), a.GetLength(0)];
+        var transposed = new IntMatrix(a.Width, a.Height);
         var threads = Enumerable
-            .Range(0, a.GetLength(1))
+            .Range(0, a.Width)
             .Select(
                 i =>
                     new Thread(() =>
                     {
-                        for (int j = 0; j < a.GetLength(0); j++)
+                        for (int j = 0; j < a.Height; j++)
                         {
                             transposed[i, j] = a[j, i];
                         }

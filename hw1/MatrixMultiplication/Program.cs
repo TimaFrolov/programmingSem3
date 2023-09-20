@@ -23,23 +23,19 @@ internal static class Program
         + "    22 28\n"
         + "    49 64\n";
 
-    private static void WriteToFile(int[,] matrix, string path)
+    private static void WriteToFile(IntMatrix matrix, string path)
     {
         File.WriteAllLines(
             path,
-            from i in Enumerable.Range(0, matrix.GetLength(0))
-            select string.Join(
-                ' ',
-                from j in Enumerable.Range(0, matrix.GetLength(1))
-                select matrix[i, j]
-            )
+            from i in Enumerable.Range(0, matrix.Height)
+            select string.Join(' ', from j in Enumerable.Range(0, matrix.Width) select matrix[i, j])
         );
     }
 
-    private static int[,]? PerformMultiplication(
+    private static IntMatrix? PerformMultiplication(
         Workspace.ModeType mode,
-        int[,] matrix1,
-        int[,] matrix2
+        IntMatrix matrix1,
+        IntMatrix matrix2
     )
     {
         switch (mode)
@@ -66,7 +62,9 @@ internal static class Program
         }
         catch (ArgumentException exception)
         {
-            Console.WriteLine($"Incorrect program arguments: {exception.Message}. Use 'MatrixMultiplication --help' to get help");
+            Console.WriteLine(
+                $"Incorrect program arguments: {exception.Message}. Use 'MatrixMultiplication --help' to get help"
+            );
             return;
         }
 
@@ -76,8 +74,8 @@ internal static class Program
             return;
         }
 
-        int[,] matrix1;
-        int[,] matrix2;
+        IntMatrix matrix1;
+        IntMatrix matrix2;
         try
         {
             matrix1 = MatrixParser.ParseMatrix(File.ReadLines(workspace.InputFile1).ToArray());
@@ -99,7 +97,7 @@ internal static class Program
             return;
         }
 
-        int[,]? result = PerformMultiplication(workspace.Mode, matrix1, matrix2);
+        IntMatrix? result = PerformMultiplication(workspace.Mode, matrix1, matrix2);
 
         if (result == null)
         {

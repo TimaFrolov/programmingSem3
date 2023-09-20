@@ -1,18 +1,20 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 
+using MatrixMultiplication;
+
 public class Benchmark
 {
     [Params(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048)]
     public int size { get; set; }
-    private int[,] a = new int[0, 1];
-    private int[,] b = new int[0, 0];
+    private IntMatrix a = new IntMatrix(0, 1);
+    private IntMatrix b = new IntMatrix(0, 0);
 
     [GlobalSetup]
     public void GlobalSetup()
     {
-        a = new int[size, size];
-        b = new int[size, size];
+        a = new IntMatrix(size, size);
+        b = new IntMatrix(size, size);
         var random = new Random();
         for (int i = 0; i < size; i++)
         {
@@ -25,16 +27,14 @@ public class Benchmark
     }
 
     [Benchmark]
-    public int[,]? Multiply()
-        => MatrixMultiplication.MartixMultiplier.Multiply(a, b);
+    public IntMatrix? Multiply() => MartixMultiplier.Multiply(a, b);
 
     [Benchmark]
-    public int[,]? MultiplyWithTransposition()
-        => MatrixMultiplication.MartixMultiplier.MultiplyWithTransposition(a, b);
+    public IntMatrix? MultiplyWithTransposition() =>
+        MartixMultiplier.MultiplyWithTransposition(a, b);
 
     [Benchmark]
-    public int[,]? MultiplyWithThreads()
-        => MatrixMultiplication.MartixMultiplier.MultiplyWithMultithreading(a, b);
+    public IntMatrix? MultiplyWithThreads() => MartixMultiplier.MultiplyWithMultithreading(a, b);
 }
 
 internal class Program
