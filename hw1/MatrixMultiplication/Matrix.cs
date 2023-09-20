@@ -17,5 +17,28 @@ public class IntMatrix
         set => this.underlying[i, j] = value;
     }
 
-    public int[,] GetUnderlying() => underlying;
+    public override bool Equals(object? other)
+    {
+        if (!(other is IntMatrix matrix))
+        {
+            return false;
+        }
+        if (this.Height != matrix.Height || this.Width != matrix.Width)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < this.Height; i++)
+        {
+            for (int j = 0; j < this.Width; j++)
+            {
+                if (this[i, j] != matrix[i, j])
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 }

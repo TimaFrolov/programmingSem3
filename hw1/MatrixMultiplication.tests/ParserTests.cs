@@ -2,24 +2,28 @@ namespace MatrixMultiplication.tests;
 
 public class ParserTests
 {
-    private static readonly (string[], int[,])[] TestCases =
+    private static readonly (string[], IntMatrix)[] TestCases =
     {
         (
             new string[] { "1 2 3", "4 5 6" },
-            new int[,]
-            {
-                { 1, 2, 3 },
-                { 4, 5, 6 }
-            }
+            new IntMatrix(
+                new int[,]
+                {
+                    { 1, 2, 3 },
+                    { 4, 5, 6 }
+                }
+            )
         ),
         (
             new string[] { "1 2", "3 4", "5 6" },
-            new int[,]
-            {
-                { 1, 2 },
-                { 3, 4 },
-                { 5, 6 }
-            }
+            new IntMatrix(
+                new int[,]
+                {
+                    { 1, 2 },
+                    { 3, 4 },
+                    { 5, 6 }
+                }
+            )
         ),
     };
 
@@ -30,7 +34,7 @@ public class ParserTests
     };
 
     [TestCaseSource(nameof(TestCases))]
-    public void Test1((string[] lines, int[,] expected) testCase)
+    public void Test1((string[] lines, IntMatrix expected) testCase)
     {
         var actual = MatrixParser.ParseMatrix(testCase.lines);
         Assert.That(actual, Is.EqualTo(testCase.expected));

@@ -56,7 +56,7 @@ public static class MartixMultiplier
             {
                 answer[i, j] = Enumerable
                     .Range(0, firstMatrix.Width)
-                    .Sum(k => firstMatrix[i, k] * secondMatrixTransposed[k, j]);
+                    .Sum(k => firstMatrix[i, k] * secondMatrixTransposed[j, k]);
             }
         }
 
@@ -94,7 +94,7 @@ public static class MartixMultiplier
                         {
                             answer[i, j] = Enumerable
                                 .Range(0, firstMatrix.Width)
-                                .Sum(k => firstMatrix[i, k] * secondMatrixTransposed[k, j]);
+                                .Sum(k => firstMatrix[i, k] * secondMatrixTransposed[j, k]);
                         }
                     })
             )

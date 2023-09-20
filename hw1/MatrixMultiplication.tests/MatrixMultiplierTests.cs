@@ -2,62 +2,78 @@ namespace MatrixMultiplication.tests;
 
 public class MatrixMultiplierTests
 {
-    private static readonly (int[,], int[,], int[,]? TestCases)[] TestCases =
+    private static readonly (IntMatrix, IntMatrix, IntMatrix? TestCases)[] TestCases =
     {
         (
-            new int[,]
-            {
-                { 1, 2, 3 },
-                { 4, 5, 6 }
-            },
-            new int[,]
-            {
-                { 1, 2 },
-                { 3, 4 },
-                { 5, 6 }
-            },
-            new int[,]
-            {
-                { 22, 28 },
-                { 49, 64 }
-            }
+            new IntMatrix(
+                new int[,]
+                {
+                    { 1, 2, 3 },
+                    { 4, 5, 6 }
+                }
+            ),
+            new IntMatrix(
+                new int[,]
+                {
+                    { 1, 2 },
+                    { 3, 4 },
+                    { 5, 6 }
+                }
+            ),
+            new IntMatrix(
+                new int[,]
+                {
+                    { 22, 28 },
+                    { 49, 64 }
+                }
+            )
         ),
         (
-            new int[,]
-            {
-                { 1, 0, 0 },
-                { 0, 1, 0 },
-                { 0, 0, 1 }
-            },
-            new int[,]
-            {
-                { 1, 0, 0 },
-                { 0, 1, 0 },
-                { 0, 0, 1 }
-            },
-            new int[,]
-            {
-                { 1, 0, 0 },
-                { 0, 1, 0 },
-                { 0, 0, 1 }
-            }
+            new IntMatrix(
+                new int[,]
+                {
+                    { 1, 0, 0 },
+                    { 0, 1, 0 },
+                    { 0, 0, 1 }
+                }
+            ),
+            new IntMatrix(
+                new int[,]
+                {
+                    { 1, 0, 0 },
+                    { 0, 1, 0 },
+                    { 0, 0, 1 }
+                }
+            ),
+            new IntMatrix(
+                new int[,]
+                {
+                    { 1, 0, 0 },
+                    { 0, 1, 0 },
+                    { 0, 0, 1 }
+                }
+            )
         ),
         (
-            new int[,]
-            {
-                { 1, 2, 3 },
-                { 4, 5, 6 }
-            },
-            new int[,]
-            {
-                { 1, 2 },
-                { 3, 4 }
-            },
+            new IntMatrix(
+                new int[,]
+                {
+                    { 1, 2, 3 },
+                    { 4, 5, 6 }
+                }
+            ),
+            new IntMatrix(
+                new int[,]
+                {
+                    { 1, 2 },
+                    { 3, 4 }
+                }
+            ),
             null
         )
     };
 
-    public static Func<int[,], int[,], int[,]?>[] Functions =
+    public static Func<IntMatrix, IntMatrix, IntMatrix?>[] Functions =
     {
         MartixMultiplier.Multiply,
         MartixMultiplier.MultiplyWithTransposition,
@@ -67,8 +83,8 @@ public class MatrixMultiplierTests
     [Test]
     public void Test(
         [ValueSource(nameof(TestCases))]
-            (int[,] matrix1, int[,] matrix2, int[,]? expected) testCase,
-        [ValueSource(nameof(Functions))] Func<int[,], int[,], int[,]?> function
+            (IntMatrix matrix1, IntMatrix matrix2, IntMatrix? expected) testCase,
+        [ValueSource(nameof(Functions))] Func<IntMatrix, IntMatrix, IntMatrix?> function
     )
     {
         var actual = function(testCase.matrix1, testCase.matrix2);
