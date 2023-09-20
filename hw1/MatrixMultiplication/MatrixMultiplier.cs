@@ -84,17 +84,27 @@ public static class MartixMultiplier
         var secondMatrixTransposed = TransposeMultithreaded(secondMatrix);
         var answer = new IntMatrix(firstMatrix.Height, secondMatrix.Width);
 
+        var threadsAmount = Math.Min(Environment.ProcessorCount, firstMatrix.Height);
+        var rowsPerThread = (int)Math.Ceiling((double)firstMatrix.Height / threadsAmount);
+
         var threads = Enumerable
-            .Range(0, firstMatrix.Height)
+            .Range(0, threadsAmount)
             .Select(
                 i =>
                     new Thread(() =>
                     {
-                        for (int j = 0; j < secondMatrix.Width; j++)
+                        for (
+                            int j = i * rowsPerThread;
+                            j < (i + 1) * rowsPerThread && j < firstMatrix.Height;
+                            j++
+                        )
                         {
-                            answer[i, j] = Enumerable
-                                .Range(0, firstMatrix.Width)
-                                .Sum(k => firstMatrix[i, k] * secondMatrixTransposed[j, k]);
+                            for (int k = 0; k < secondMatrix.Width; k++)
+                            {
+                                answer[j, k] = Enumerable
+                                    .Range(0, firstMatrix.Width)
+                                    .Sum(s => firstMatrix[j, s] * secondMatrixTransposed[k, s]);
+                            }
                         }
                     })
             )
@@ -141,15 +151,26 @@ public static class MartixMultiplier
     private static IntMatrix TransposeMultithreaded(IntMatrix matrix)
     {
         var transposed = new IntMatrix(matrix.Width, matrix.Height);
+
+        var threadsAmount = Math.Min(Environment.ProcessorCount, matrix.Height);
+        var rowsPerThread = (int)Math.Ceiling((double)matrix.Height / threadsAmount);
+
         var threads = Enumerable
-            .Range(0, matrix.Width)
+            .Range(0, Environment.ProcessorCount)
             .Select(
                 i =>
                     new Thread(() =>
                     {
-                        for (int j = 0; j < matrix.Height; j++)
+                        for (
+                            int j = i * rowsPerThread;
+                            j < (i + 1) * rowsPerThread && j < matrix.Height;
+                            j++
+                        )
                         {
-                            transposed[i, j] = matrix[j, i];
+                            for (int k = 0; k < matrix.Width; k++)
+                            {
+                                transposed[k, j] = matrix[j, k];
+                            }
                         }
                     })
             )
