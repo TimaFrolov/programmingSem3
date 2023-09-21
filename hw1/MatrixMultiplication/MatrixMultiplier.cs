@@ -156,7 +156,7 @@ public static class MartixMultiplier
         var rowsPerThread = (int)Math.Ceiling((double)matrix.Height / threadsAmount);
 
         var threads = Enumerable
-            .Range(0, Environment.ProcessorCount)
+            .Range(0, threadsAmount)
             .Select(
                 i =>
                     new Thread(() =>
