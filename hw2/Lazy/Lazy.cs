@@ -58,7 +58,7 @@ public sealed class LazyLock<T> : ILazy<T>
     private Option<Result<T, Exception>> value = Option<Result<T, Exception>>.None;
 
     private int valueStartedProducing = 0;
-    private bool valueProduced = false;
+    private volatile bool isValueProduced = false;
     private ManualResetEvent valueProducedEvent = new ManualResetEvent(false);
 
     /// <summary>
@@ -76,7 +76,7 @@ public sealed class LazyLock<T> : ILazy<T>
             Result<T, Exception> value = Try<Exception>.Call(this.factory.Unwrap());
 
             this.value = value;
-            Volatile.Write(ref this.valueProduced, true);
+            this.isValueProduced = true;
             this.valueProducedEvent.Set();
 
             this.factory = Option<Func<T>>.None;
@@ -85,7 +85,7 @@ public sealed class LazyLock<T> : ILazy<T>
 
         Interlocked.Exchange(ref this.valueStartedProducing, 1);
 
-        if (!this.valueProduced)
+        if (!this.isValueProduced)
         {
             this.valueProducedEvent.WaitOne();
             return Volatile.Read(ref this.value).Unwrap().UnwrapOrElse(err => throw err);
