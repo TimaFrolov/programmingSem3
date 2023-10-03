@@ -37,6 +37,12 @@ public class LazyTests
         func => new ParallelLazy<int>(func),
     };
 
+    private static readonly Func<Func<int?>, ILazy<int?>>[] nullableIntConstructors =
+    {
+        func => new Lazy<int?>(func),
+        func => new ParallelLazy<int?>(func),
+    };
+
     [Test]
     public void TestGet(
         [ValueSource(nameof(intConstructors))] Func<Func<int>, ILazy<int>> lazyConstructor
@@ -58,6 +64,29 @@ public class LazyTests
         var third = lazy.Get();
         Assert.That(counter.CallsCount, Is.EqualTo(1));
         Assert.That(third, Is.EqualTo(42));
+    }
+
+    [Test]
+    public void TestGetNull(
+        [ValueSource(nameof(nullableIntConstructors))] Func<Func<int?>, ILazy<int?>> lazyConstructor
+    )
+    {
+        var counter = new Counter<int?>(() => null);
+        var lazy = lazyConstructor(counter.Call);
+
+        Assert.That(counter.CallsCount, Is.EqualTo(0));
+
+        var first = lazy.Get();
+        Assert.That(counter.CallsCount, Is.EqualTo(1));
+        Assert.That(first, Is.EqualTo(null));
+
+        var second = lazy.Get();
+        Assert.That(counter.CallsCount, Is.EqualTo(1));
+        Assert.That(second, Is.EqualTo(null));
+
+        var third = lazy.Get();
+        Assert.That(counter.CallsCount, Is.EqualTo(1));
+        Assert.That(third, Is.EqualTo(null));
     }
 
     [Test]
