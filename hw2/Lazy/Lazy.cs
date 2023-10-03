@@ -52,7 +52,7 @@ public sealed class Lazy<T> : ILazy<T>
 /// A thread-safe lazy evaluation implementation.
 /// </summary>
 /// <typeparam name="T">The type of the value.</typeparam>
-public sealed class LazyLock<T> : ILazy<T>
+public sealed class ParallelLazy<T> : ILazy<T>
 {
     private Option<Func<T>> factory;
     private Option<Result<T, Exception>> value = Option<Result<T, Exception>>.None;
@@ -62,11 +62,11 @@ public sealed class LazyLock<T> : ILazy<T>
     private ManualResetEvent valueProducedEvent = new ManualResetEvent(false);
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="LazyLock{T}"/> class.
+    /// Initializes a new instance of the <see cref="ParallelLazy{T}"/> class.
     /// </summary>
     /// <param name="factory">The factory function.</param>
     /// <returns>The lazy evaluation.</returns>
-    public LazyLock(Func<T> factory) => this.factory = factory;
+    public ParallelLazy(Func<T> factory) => this.factory = factory;
 
     /// <inheritdoc cref="ILazy{T}"/>
     public T Get()

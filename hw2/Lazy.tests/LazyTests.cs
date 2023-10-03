@@ -34,7 +34,7 @@ public class LazyTests
     private static readonly Func<Func<int>, ILazy<int>>[] intConstructors =
     {
         func => new Lazy<int>(func),
-        func => new LazyLock<int>(func),
+        func => new ParallelLazy<int>(func),
     };
 
     [Test]
@@ -91,7 +91,7 @@ public class LazyTests
     public void TestLazyLock()
     {
         var counter = new Counter<int>(() => 42);
-        var lazy = new LazyLock<int>(counter.Call);
+        var lazy = new ParallelLazy<int>(counter.Call);
         var @event = new ManualResetEvent(false);
 
         var threads = Enumerable
