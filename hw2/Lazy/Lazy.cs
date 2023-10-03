@@ -13,7 +13,7 @@ public interface ILazy<T>
     /// </summary>
     /// <returns>The value.</returns>
     /// <exception>If the factory function throws an exception.</exception>
-    T Get();
+    public T Get();
 }
 
 /// <summary>
