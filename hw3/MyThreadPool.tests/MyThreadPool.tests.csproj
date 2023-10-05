@@ -20,4 +20,7 @@
     <ProjectReference Include="..\MyThreadPool\MyThreadPool.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\utils\utils\utils.csproj" />
+  </ItemGroup>
 </Project>

@@ -26,35 +26,58 @@ public class MyThreadPool
     {
         this.threads = Enumerable
             .Range(0, threadsAmount)
-            .Select(_ => new MyThread(this.provideTask))
+            .Select(_ => new MyThread(this.ProvideTask))
             .ToArray();
     }
 
-    private Action provideTask()
+    private Action ProvideTask()
     {
         this.tasksAmount.WaitOne();
         this.tasks.TryDequeue(out Executable? task);
-        this.updateQueueIsEmpty();
+        this.UpdateQueueIsEmpty();
         return task!.Execute;
     }
 
-    private void updateQueueIsEmpty()
+    private void UpdateQueueIsEmpty()
     {
-        if (!this.keepExecuting && this.tasks.IsEmpty && this.tasksToEnqueue == 0)
+        lock (this.tasks)
         {
-            this.queueIsEmpty.Set();
+            if (!this.keepExecuting && this.tasks.IsEmpty && this.tasksToEnqueue == 0)
+            {
+                this.queueIsEmpty.Set();
+            }
         }
     }
 
     public IMyTask<T> Submit<T>(Func<T> task)
     {
-        if (!this.keepExecuting)
+        lock (this.tasks)
         {
-            throw new InvalidOperationException("The thread pool is shut down.");
-        }
+            if (!this.keepExecuting)
+            {
+                throw new InvalidOperationException("The thread pool is shut down.");
+            }
 
-        Task<T> myTask = new(this, task);
-        this.tasks.Enqueue(myTask);
+            Task<T> myTask = new(this, task);
+            this.tasks.Enqueue(myTask);
+            this.tasksAmount.Release();
+            return myTask;
+        }
+    }
+
+    public IMyTask Submit(Action task)
+    {
+        Task myTask;
+        lock (this.tasks)
+        {
+            if (!this.keepExecuting)
+            {
+                throw new InvalidOperationException("The thread pool is shut down.");
+            }
+
+            myTask = new(this, task);
+            this.tasks.Enqueue(myTask);
+        }
         this.tasksAmount.Release();
         return myTask;
     }
@@ -69,7 +92,11 @@ public class MyThreadPool
     public void Shutdown()
     {
         this.keepExecuting = false;
-        this.queueIsEmpty.WaitOne();
+        this.UpdateQueueIsEmpty();
+        if (this.tasksToEnqueue != 0)
+        {
+            this.queueIsEmpty.WaitOne();
+        }
 
         foreach (var thread in this.threads)
         {
@@ -82,6 +109,29 @@ public class MyThreadPool
         {
             thread.Wait();
         }
+    }
+
+    public void Dispose()
+    {
+        this.Shutdown();
+        this.queueIsEmpty.Dispose();
+        this.tasksAmount.Dispose();
+    }
+
+    private class Task : Task<Monostate>, IMyTask
+    {
+        public Task(MyThreadPool threadPool, Action task)
+            : base(
+                threadPool,
+                () =>
+                {
+                    task();
+                    return Monostate.Instance;
+                }
+            ) { }
+
+        public IMyTask<TNew> ContinueWith<TNew>(Func<TNew> continuation) =>
+            this.ContinueWith((Monostate _) => continuation());
     }
 
     private class Task<T> : IMyTask<T>, Executable
@@ -140,13 +190,15 @@ public class MyThreadPool
             }
         }
 
+        public void Wait() => this.executeCompleted.WaitOne();
+
         public IMyTask<TNew> ContinueWith<TNew>(Func<T, TNew> continuation)
         {
             Interlocked.Increment(ref this.threadPool.tasksToEnqueue);
             if (!this.threadPool.keepExecuting)
             {
                 Interlocked.Decrement(ref this.threadPool.tasksToEnqueue);
-                this.threadPool.updateQueueIsEmpty();
+                this.threadPool.UpdateQueueIsEmpty();
                 throw new InvalidOperationException("The thread pool is shut down.");
             }
             Task<TNew> newTask = new(this.threadPool, () => continuation(this.Result));

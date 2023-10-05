@@ -13,6 +13,7 @@ internal class MyThread
     {
         this.taskFactory = taskFactory;
         this.underlying = new Thread(this.EventLoop);
+        this.underlying.Start();
     }
 
     private void EventLoop()
