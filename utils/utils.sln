@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "utils", "utils\utils.csproj", "{04764232-DE11-42B6-8290-3F39281C4848}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "utils.tests", "utils.tests\utils.tests.csproj", "{6B851ABB-AA64-4408-AED4-F95203DE3813}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{04764232-DE11-42B6-8290-3F39281C4848}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04764232-DE11-42B6-8290-3F39281C4848}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04764232-DE11-42B6-8290-3F39281C4848}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04764232-DE11-42B6-8290-3F39281C4848}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B851ABB-AA64-4408-AED4-F95203DE3813}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B851ABB-AA64-4408-AED4-F95203DE3813}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B851ABB-AA64-4408-AED4-F95203DE3813}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B851ABB-AA64-4408-AED4-F95203DE3813}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
