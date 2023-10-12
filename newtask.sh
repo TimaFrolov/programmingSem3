@@ -27,3 +27,4 @@ dotnet sln add *.sln $TASK_NAME/$TASK_NAME.csproj
 dotnet sln add *.sln $TASK_NAME.tests/$TASK_NAME.tests.csproj
 popd
 dotnet add "$TASK_PATH/$TASK_NAME/$TASK_NAME.csproj" reference utils/utils/utils.csproj
+dotnet add "$TASK_PATH/$TASK_NAME.tests/$TASK_NAME.tests.csproj" reference utils/utils/utils.csproj
