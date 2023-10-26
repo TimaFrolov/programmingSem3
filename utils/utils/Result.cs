@@ -20,6 +20,14 @@ public record Result<TOk, TErr>
     public sealed record Err(TErr value) : Result<TOk, TErr>;
 
     /// <summary>
+    /// Unwraps the value or throws an exception if the result is an error.
+    /// </summary>
+    /// <returns>The value.</returns>
+    /// <exception cref="InvalidOperationException">If the result is an error.</exception>
+    public TOk Unwrap() =>
+        this is Ok ok ? ok.value : throw new InvalidOperationException("Invalid result access");
+
+    /// <summary>
     /// Unwraps the value or calls a function if the result is an error.
     /// </summary>
     /// <param name="func">The function.</param>
@@ -41,6 +49,26 @@ public record Result<TOk, TErr>
     /// </summary>
     /// <returns><c>true</c> if the result is an error, <c>false</c> otherwise.</returns>
     public bool IsErr() => this is Err;
+
+    /// <summary>
+    /// Maps the result to a new result.
+    /// </summary>
+    /// <typeparam name="TNew">The type of the new result.</typeparam>
+    /// <param name="func">The mapping function.</param>
+    /// <returns>
+    /// If the result is a value, <paramref name="func"/> applied to value,
+    /// containing the error otherwise.
+    /// </returns>
+    public Result<TNew, TErr> Map<TNew>(Func<TOk, TNew> func) =>
+        this is Ok ok
+            ? new Result<TNew, TErr>.Ok(func(ok.value))
+            : new Result<TNew, TErr>.Err((this as Err)!.value);
+
+    /// <summary>
+    /// Tries to unwrap the value.
+    /// </summary>
+    /// <returns>Unwrapped value or <see cref="Option{T}.None"/> if this is <see cref="Result{TOk, TErr}.Err"/>.</returns>
+    public Option<TOk> TryUnwrap() => this is Ok ok ? ok.value : Option<TOk>.None;
 
     /// <summary>
     /// Unwraps the error or throws an exception if the result is a value.
