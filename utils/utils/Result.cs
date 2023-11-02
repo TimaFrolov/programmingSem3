@@ -43,6 +43,29 @@ public record Result<TOk, TErr>
     public bool IsErr() => this is Err;
 
     /// <summary>
+    /// Maps the result to a new result.
+    /// </summary>
+    /// <typeparam name="TNew">The type of the new result.</typeparam>
+    /// <param name="func">The mapping function.</param>
+    /// <returns>
+    /// If the result is a value, <paramref name="func"/> applied to value,
+    /// containing the error otherwise.
+    /// </returns>
+    public Result<TNew, TErr> Map<TNew>(Func<TOk, TNew> func) =>
+        this is Ok ok
+            ? new Result<TNew, TErr>.Ok(func(ok.value))
+            : new Result<TNew, TErr>.Err((this as Err)!.value);
+
+    public TNew MapOrElse<TNew>(Func<TOk, TNew> funcOk, Func<TErr, TNew> funcErr) =>
+        this is Ok ok ? funcOk(ok.value) : funcErr((this as Err)!.value);
+
+    /// <summary>
+    /// Tries to unwrap the value.
+    /// </summary>
+    /// <returns>Unwrapped value or <see cref="Option{T}.None"/> if this is <see cref="Result{TOk, TErr}.Err"/>.</returns>
+    public Option<TOk> TryUnwrap() => this is Ok ok ? ok.value : Option<TOk>.None;
+
+    /// <summary>
     /// Unwraps the error or throws an exception if the result is a value.
     /// </summary>
     /// <returns>The error.</returns>
