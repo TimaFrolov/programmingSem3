@@ -1,10 +1,16 @@
-﻿using System.Net;
+﻿namespace Chat;
+
+using System.Net;
 using Utils;
 
-namespace Chat;
-
+/// <summary>
+/// Internal class Program.
+/// </summary>
 internal class Program
 {
+    /// <summary>Public static Task main.</summary>
+    /// <param name="args">Command line arguments.</param>
+    /// <returns>Main task.</returns>
     public static async Task Main(string[] args)
     {
         if (args.Length < 1 || args.Length > 2)
@@ -35,6 +41,7 @@ internal class Program
                 Console.WriteLine("Incorrect address given!");
                 return;
             }
+
             client = await MakeClientAndWaitForConnection(address, port);
         }
 
@@ -49,6 +56,7 @@ internal class Program
             {
                 break;
             }
+
             var message = Option<string>.From(await consoleReadingTask);
             message.Map(client.SendMessage);
             if (message is Option<string>.Some some && some.value == "exit")
