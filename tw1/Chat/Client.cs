@@ -25,23 +25,16 @@ public class Client
 
         while (this.client.Connected)
         {
-            var message = Option<string>.From(await reader.ReadLineAsync());
-            message.Map(writer.WriteLineAsync);
-            if (message is Option<string>.Some some && some.value == "exit")
-            {
-                client.Close();
-            }
+            Option<string>.From(await reader.ReadLineAsync()).Map(writer.WriteLineAsync);
         }
     }
 
     public async Task<bool> SendMessage(string message) =>
         (
-            await Try<System.IO.IOException>.CallAsync(
-                async () =>
-                    await new StreamWriter(this.client.GetStream())
-                    {
-                        AutoFlush = true
-                    }.WriteLineAsync(message)
-            )
+            await Try<System.IO.IOException>.CallAsync(async () =>
+            {
+                using var writer = new StreamWriter(this.client.GetStream()) { AutoFlush = true };
+                await writer.WriteLineAsync(message);
+            })
         ).IsNone();
 }

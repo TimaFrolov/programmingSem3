@@ -34,11 +34,15 @@ public record Option<T>
     /// <param name="value">The value.</param>
     public static implicit operator Option<T>(T value) => new Some(value);
 
+    public static Option<T> From(T? value) => value != null ? new Some(value) : None;
+
     /// <summary>
     /// Checks if the option is a value.
     /// </summary>
     /// <returns><c>true</c> if the option is a value, <c>false</c> otherwise.</returns>
     public bool IsSome() => this is Some;
+
+    public bool IsNone() => this is _None;
 
     /// <summary>
     /// Maps the option to a new option.
