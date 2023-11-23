@@ -59,8 +59,8 @@ public class Client
         (
             await Try<System.IO.IOException>.CallAsync(
                 () =>
-                    new StreamWriter(this.client.GetStream()) { AutoFlush = true }.WriteLineAsync(
-                        message
+                    new StreamWriter(this.client.GetStream()) { AutoFlush = true }.WriteAsync(
+                        message + "\n"
                     )
             )
         ).IsNone();

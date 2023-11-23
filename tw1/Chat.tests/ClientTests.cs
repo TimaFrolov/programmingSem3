@@ -36,16 +36,10 @@ public class ClientTests
         Assert.True(this.client.Connected);
         var stream = new MemoryStream(5);
         var task = this.client.Listen(new StreamWriter(stream));
-        new StreamWriter(stream) { AutoFlush = true }.WriteLine("test");
-        Assert.That(stream.GetBuffer().Length, Is.AnyOf(5, 6));
+        new StreamWriter(stream) { AutoFlush = true }.Write("test\n");
         Assert.That(
-            stream.GetBuffer().Take(4),
-            Is.EqualTo(new byte[] { (byte)'t', (byte)'e', (byte)'s', (byte)'t' })
+            stream.GetBuffer(),
+            Is.EqualTo(new byte[] { (byte)'t', (byte)'e', (byte)'s', (byte)'t', (byte)'\n' })
         );
-        Assert.That(stream.GetBuffer().Last(), Is.EqualTo((byte)'\n'));
-        if (stream.GetBuffer().Length == 6)
-        {
-            Assert.That(stream.GetBuffer().Last(), Is.EqualTo((byte)'\r'));
-        }
     }
 }
