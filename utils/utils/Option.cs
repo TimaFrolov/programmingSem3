@@ -28,6 +28,8 @@ public record Option<T>
     /// </remarks>
     public static readonly _None None = new _None();
 
+    public static Option<T> From(T? value) => value is null ? None : new Some(value);
+
     /// <summary>
     /// Implicitly converts a value to an option.
     /// </summary>
@@ -39,6 +41,8 @@ public record Option<T>
     /// </summary>
     /// <returns><c>true</c> if the option is a value, <c>false</c> otherwise.</returns>
     public bool IsSome() => this is Some;
+
+    public bool IsNone() => this is _None;
 
     /// <summary>
     /// Maps the option to a new option.
