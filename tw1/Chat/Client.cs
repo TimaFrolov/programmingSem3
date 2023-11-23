@@ -57,10 +57,11 @@ public class Client
     /// <returns>Whether the message was sent successfully.</returns>
     public async Task<bool> SendMessage(string message) =>
         (
-            await Try<System.IO.IOException>.CallAsync(async () =>
-            {
-                using var writer = new StreamWriter(this.client.GetStream()) { AutoFlush = true };
-                await writer.WriteLineAsync(message);
-            })
+            await Try<System.IO.IOException>.CallAsync(
+                () =>
+                    new StreamWriter(this.client.GetStream()) { AutoFlush = true }.WriteLineAsync(
+                        message
+                    )
+            )
         ).IsNone();
 }
