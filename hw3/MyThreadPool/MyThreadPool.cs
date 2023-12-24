@@ -173,7 +173,7 @@ public class MyThreadPool
     private class Task<T> : IMyTask<T>, IExecutable
     {
         private MyThreadPool threadPool;
-        private bool isCompleted = false;
+        private volatile bool isCompleted = false;
         private Option<Result<T, Exception>> result = Option<Result<T, Exception>>.None;
         private ManualResetEvent executeCompleted = new(false);
         private Option<Func<T>> task;
@@ -216,7 +216,7 @@ public class MyThreadPool
 
             lock (this.result)
             {
-                Volatile.Write(ref this.isCompleted, true);
+                this.isCompleted= true;
                 this.executeCompleted.Set();
                 foreach (var continuation in this.continuations)
                 {
@@ -258,7 +258,7 @@ public class MyThreadPool
         {
             lock (this.result)
             {
-                if (Volatile.Read(ref this.isCompleted))
+                if (this.isCompleted)
                 {
                     this.threadPool.Submit(task);
                 }
