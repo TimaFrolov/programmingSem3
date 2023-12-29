@@ -14,7 +14,7 @@ public record TestResult(string className, string methodName)
     /// Represents a successful test.
     /// </summary>
     /// <inheritdoc cref="TestResult"/>
-    public record Ok(string className, string methodName) : TestResult(className, methodName);
+    public record Ok(string className, string methodName, TimeSpan elapsed) : TestResult(className, methodName);
 
     /// <summary>
     /// Represents a failed test.
@@ -22,7 +22,7 @@ public record TestResult(string className, string methodName)
     /// <param name="className"><inheritdoc cref="TestResult"/></param>
     /// <param name="methodName"><inheritdoc cref="TestResult"/></param>
     /// <param name="exception">The exception that caused the test to fail.</param>
-    public record Error(string className, string methodName, Exception exception)
+    public record Error(string className, string methodName, Exception exception, TimeSpan elapsed)
         : TestResult(className, methodName);
 
     /// <summary>
@@ -46,11 +46,12 @@ public record TestResult(string className, string methodName)
     public static TestResult From(
         string className,
         string methodName,
-        Option<Exception> exception
+        Option<Exception> exception,
+        TimeSpan elapsed
     ) =>
         exception.IsSome()
-            ? new Error(className, methodName, exception.Unwrap())
-            : new Ok(className, methodName);
+            ? new Error(className, methodName, exception.Unwrap(), elapsed)
+            : new Ok(className, methodName, elapsed);
 }
 
 /// <summary>
@@ -120,23 +121,28 @@ public static class TestRunner
         }
 
         TestResult ret;
+        var watch = System.Diagnostics.Stopwatch.StartNew();
         try
         {
             method.Invoke(instance, null);
+            watch.Stop();
             ret = TestResult.From(
                 type.Name,
                 method.Name,
                 testAttr.Expected
                     ? new Exception("Expected exception was not thrown")
-                    : Option<Exception>.None
+                    : Option<Exception>.None,
+                watch.Elapsed
             );
         }
         catch (Exception exception)
         {
+            watch.Stop();
             ret = TestResult.From(
                 type.Name,
                 method.Name,
-                testAttr.Expected ? Option<Exception>.None : exception.InnerException!
+                testAttr.Expected ? Option<Exception>.None : exception.InnerException!,
+                watch.Elapsed
             );
         }
 
