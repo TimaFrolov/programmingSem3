@@ -14,6 +14,12 @@ internal class Program
     /// <returns>The number of failed tests.</returns>
     public static async Task<int> Main(string[] args)
     {
+        if (args.Length != 1)
+        {
+            Console.WriteLine("Usage: MyNUnit <assembly>");
+            return 1;
+        }
+
         var assembly = Assembly.LoadFrom(args[0]);
 
         var results = await TestRunner.RunAssemblyTests(assembly);
@@ -24,13 +30,13 @@ internal class Program
         {
             if (result is TestResult.Ok ok)
             {
-                Console.WriteLine($"{ok.className}.{ok.methodName} passed");
+                Console.WriteLine($"{ok.className}.{ok.methodName} passed in {ok.elapsed}");
             }
 
             if (result is TestResult.Error error)
             {
                 Console.WriteLine(
-                    $"{error.className}.{error.methodName} failed: {error.exception}"
+                    $"{error.className}.{error.methodName} failed in {error.elapsed}: {error.exception}"
                 );
                 errors++;
             }
