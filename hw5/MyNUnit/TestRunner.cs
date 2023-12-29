@@ -14,6 +14,7 @@ public record TestResult(string className, string methodName)
     /// Represents a successful test.
     /// </summary>
     /// <inheritdoc cref="TestResult"/>
+    /// <param name="elapsed">The time that test took to run.</param>
     public record Ok(string className, string methodName, TimeSpan elapsed) : TestResult(className, methodName);
 
     /// <summary>
@@ -22,6 +23,7 @@ public record TestResult(string className, string methodName)
     /// <param name="className"><inheritdoc cref="TestResult"/></param>
     /// <param name="methodName"><inheritdoc cref="TestResult"/></param>
     /// <param name="exception">The exception that caused the test to fail.</param>
+    /// <param name="elapsed">The time that test took to run.</param>
     public record Error(string className, string methodName, Exception exception, TimeSpan elapsed)
         : TestResult(className, methodName);
 
@@ -42,6 +44,7 @@ public record TestResult(string className, string methodName)
     /// <param name="className"><inheritdoc cref="TestResult"/></param>
     /// <param name="methodName"><inheritdoc cref="TestResult"/></param>
     /// <param name="exception">The exception that caused the test to fail.</param>
+    /// <param name="elapsed">The time that test took to run.</param>
     /// <returns>A new <see cref="TestResult"/> instance.</returns>
     public static TestResult From(
         string className,
