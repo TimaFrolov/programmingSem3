@@ -13,7 +13,8 @@ public record TestResult(string className, string methodName)
     /// <summary>
     /// Represents a successful test.
     /// </summary>
-    /// <inheritdoc cref="TestResult"/>
+    /// <param name="className">The name of the class.</param>
+    /// <param name="methodName">The name of the method.</param>
     /// <param name="elapsed">The time that test took to run.</param>
     public record Ok(string className, string methodName, TimeSpan elapsed) : TestResult(className, methodName);
 
