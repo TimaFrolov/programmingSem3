@@ -23,18 +23,21 @@ internal class Program
 
     private static async Task HandleClient(TcpClient client)
     {
-        using var stream = client.GetStream();
-        using var reader = new StreamReader(stream);
-        using var writer = new StreamWriter(stream) { AutoFlush = true };
-
-        while (client.Connected)
+        using (client)
         {
-            var response = await Option<string>
-                .From(await reader.ReadLineAsync())
-                .AndThen(Request.TryFrom)
-                .MapOr(GetAnswer, Response.UnknownRequest);
+            using var stream = client.GetStream();
+            using var reader = new StreamReader(stream);
+            using var writer = new StreamWriter(stream) { AutoFlush = true };
 
-            Try<System.IO.IOException>.Call(() => writer.WriteLineAsync(response.ToString()));
+            while (client.Connected)
+            {
+                var response = await Option<string>
+                    .From(await reader.ReadLineAsync())
+                    .AndThen(Request.TryFrom)
+                    .MapOr(GetAnswer, Response.UnknownRequest);
+
+                Try<System.IO.IOException>.Call(() => writer.WriteLineAsync(response.ToString()));
+            }
         }
     }
 
