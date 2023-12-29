@@ -1,4 +1,4 @@
-namespace SimpleFTP.Client.tests;
+namespace SimpleFTP.Client.Tests;
 
 public class CommandTests
 {

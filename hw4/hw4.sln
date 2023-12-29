@@ -5,15 +5,15 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{4537111D-DC8A-40C7-B090-B3895E26AC6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.tests", "Client.tests\Client.tests.csproj", "{56E556F4-C389-4067-BC79-D517DEE775E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Tests", "Client.tests\Client.tests.csproj", "{56E556F4-C389-4067-BC79-D517DEE775E1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{A3530627-78C8-457A-9D0C-38DEBE54089E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protocol", "Protocol\Protocol.csproj", "{980C0805-1388-48B1-B660-CC9C7D6640F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protocol.tests", "Protocol.tests\Protocol.tests.csproj", "{4E1C372E-4A9D-4611-A745-22CDD8734107}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protocol.Tests", "Protocol.tests\Protocol.tests.csproj", "{4E1C372E-4A9D-4611-A745-22CDD8734107}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workspace.tests", "Workspace.tests\Workspace.tests.csproj", "{653C0793-6399-46CC-9C1A-8541762520B7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workspace.Tests", "Workspace.tests\Workspace.tests.csproj", "{653C0793-6399-46CC-9C1A-8541762520B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workspace", "Workspace\Workspace.csproj", "{6391E986-8FFC-4FE5-9D18-FA510241B717}"
 EndProject

@@ -1,4 +1,4 @@
-namespace SimpleFTP.tests;
+namespace SimpleFTP.Tests;
 
 public class ResponseTests
 {
