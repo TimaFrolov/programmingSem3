@@ -43,6 +43,14 @@ public record Result<TOk, TErr>
     public bool IsErr() => this is Err;
 
     /// <summary>
+    /// Unwraps the value or throws an exception if the result is an error.
+    /// </summary>
+    /// <returns>The value.</returns>
+    /// <exception cref="InvalidOperationException">If the result is an error.</exception>
+    public TOk Unwrap() =>
+        this is Ok ok ? ok.value : throw new InvalidOperationException("Invalid result access");
+
+    /// <summary>
     /// Unwraps the error or throws an exception if the result is a value.
     /// </summary>
     /// <returns>The error.</returns>
