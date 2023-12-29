@@ -20,9 +20,16 @@ internal class Program
             return 1;
         }
 
-        var assembly = Assembly.LoadFrom(args[0]);
+        var assemblyPath = args[0];
 
-        var results = await TestRunner.RunAssemblyTests(assembly);
+        var assemblies = Directory
+            .EnumerateFiles(args[0])
+            .Where(file => file.EndsWith(".dll"))
+            .Select(Assembly.LoadFrom);
+
+        var results = (
+            await Task.WhenAll(assemblies.Select(TestRunner.RunAssemblyTests))
+        ).SelectMany(results => results);
 
         int errors = 0;
 
