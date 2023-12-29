@@ -8,14 +8,21 @@ public class TestResult
     public string methodName { get; set; }
     public string? reason { get; set; }
     public string? exception { get; set; }
+    public TimeSpan? elapsed { get; set; }
 
     public TestResult(MyNUnit.TestResult testResult)
     {
         this.className = testResult.className;
         this.methodName = testResult.methodName;
+        if (testResult is MyNUnit.TestResult.Ok ok)
+        {
+            this.elapsed = ok.elapsed;
+        }
+        else 
         if (testResult is MyNUnit.TestResult.Error error)
         {
             this.exception = error.exception.Message;
+            this.elapsed = error.elapsed;
         }
         else if (testResult is MyNUnit.TestResult.Ignored ignored)
         {

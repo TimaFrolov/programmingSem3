@@ -32,10 +32,8 @@ public class AssemblyController : ControllerBase
     public async Task<IActionResult> Post()
     {
         var formFiles = Request.Form.Files;
-        Console.WriteLine($"Files amount: {formFiles.ToArray().Length}");
         Assembly assembly = new();
         assembly.Files = (await Task.WhenAll(formFiles.Select(FileOfForm))).ToList();
-        Console.WriteLine($"Files: {String.Join(", ", assembly.Files.Select(file => file.Name))}");
         await this.context.Assemblies.AddAsync(assembly);
         await this.context.SaveChangesAsync();
         return Ok(assembly);

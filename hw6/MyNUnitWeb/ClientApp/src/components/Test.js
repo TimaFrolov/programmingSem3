@@ -33,6 +33,7 @@ class Test extends Component {
           <tr>
             <th>Тест</th>
             <th>Результат</th>
+            <th>Время работы</th>
             <th>Текст ошибки/причина игнорирования</th>
           </tr>
         </thead>
@@ -49,6 +50,7 @@ class Test extends Component {
               ) : (
                 <td>Ок</td>
               )}
+              <td>{test.elapsed ?? "-"}</td>
               <td>{test.exception ?? test.reason ?? "-"}</td>
             </tr>
           ))}
